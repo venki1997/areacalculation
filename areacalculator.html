@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<style>
+    .rec {
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        position: relative;
+    }
+
+    .l_input {
+        width: 100px;
+        position: absolute;
+    }
+
+    #l1 {
+
+        left: 100px;
+        top: 5px;
+    }
+
+    #l2 {
+        left: 5px;
+        top: 125px;
+    }
+
+    #l3 {
+        right: 5px;
+        top: 125px;
+    }
+
+    #l4 {
+        bottom: 5px;
+        left: 100px;
+
+    }
+</style>
+
+<script>
+    function calculate() {
+        let l1 = Number(document.getElementById('l1').value)
+        let l2 = Number(document.getElementById('l2').value)
+        let l3 = Number(document.getElementById('l3').value)
+        let l4 = Number(document.getElementById('l4').value)
+
+
+        let unit = document.getElementById('unit').value
+
+
+        let w = (l1 + l4) / 2
+        let h = (l2 + l3) / 2
+
+
+
+        let area = w * h
+
+        let areaInCent;
+
+        if (unit == "feet") {
+            areaInCent = area / 435.6
+        } else if (unit == "meter") {
+            areaInCent = area * 0.02471280747
+        }
+
+        document.getElementById("areaText").innerText = area.toFixed(2)
+        document.getElementById("centText").innerText = areaInCent.toFixed(2)
+
+
+        console.log(l1)
+    }
+
+    function reset() {
+        document.getElementById('l1').value = null
+        document.getElementById('l2').value = null
+        document.getElementById('l3').value = null
+        document.getElementById('l4').value = null
+
+        document.getElementById("areaText").innerText = 0
+        document.getElementById("centText").innerText = 0
+    }
+
+
+    function sqmtCalculation(type) {
+
+        if (type == "sqmt") {
+            let sqmt = Number(document.getElementById('sqmt').value)
+
+            document.getElementById('cent').value = (sqmt * 0.02471280747).toFixed(2)
+        } else {
+
+
+            let cent = Number(document.getElementById('cent').value)
+
+
+            document.getElementById('sqmt').value = (cent * 40.46).toFixed(2)
+
+        }
+
+
+
+    }
+
+    function sqmtreset(){
+        document.getElementById('cent').value =null
+        document.getElementById('sqmt').value = null
+    }
+
+    function sqftCalculation(type){
+        if (type == "sqft") {
+            let sqft = Number(document.getElementById('sqft').value)
+
+            document.getElementById('sqftCent').value = (sqft / 435.6).toFixed(2)
+        } else {
+
+            let cent = Number(document.getElementById('sqftCent').value)
+
+            document.getElementById('sqft').value = (cent * 435.6).toFixed(2)
+
+        }
+
+    }
+
+    function sqftReset(){
+        document.getElementById('sqft').value =null
+        document.getElementById('sqftCent').value = null
+    }
+
+
+</script>
+
+<body style="width: 100vw;height: 100vh;overflow: hidden;">
+
+
+    <div class="p-4 row">
+
+        <div class="col-lg-4 col-md-12">
+            <button onclick="reset()" class="btn btn-danger m-2">Reset</button>
+            <div class="rec">
+                <input class="l_input form-control" onkeyup="calculate()" type="number" name="l1" id="l1">
+                <input class="l_input form-control" onkeyup="calculate()" type="number" name="l2" id="l2">
+                <input class="l_input form-control" onkeyup="calculate()" type="number" name="l3" id="l3">
+                <input class="l_input form-control" onkeyup="calculate()" type="number" name="l4" id="l4">
+            </div>
+
+        </div>
+
+        <div class="col-lg-8 col-md-12">
+            <h2>Result</h2>
+
+            <div class="d-flex">
+                <select onchange="calculate()" class="form-control w-25 mx-4" name="unit" id="unit">
+                    <option value="feet">Feet</option>
+                    <option value="meter">Meter</option>
+                </select>
+
+                <!-- <select class="form-control mx-4"  name="unit" id="unit">
+                    <option value="sqft">Sq.ft</option>
+                    <option value="sqmt">Sq.mt</option>
+                </select> -->
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-6">
+                    <span>AREA</span>
+                    <h1 id="areaText" class="display-1 pt-4"> 0 </h1>
+
+                </div>
+
+                <div class="col-6">
+                    <span>CENT</span>
+                    <h1 id="centText" class="display-1 pt-4"> 0 </h1>
+
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+    <div class="row px-4">
+        <div class="col-3">
+            <h5> Sq.mt To Cent</h5>
+            <input placeholder="sq.mt" onkeyup="sqmtCalculation('sqmt')" class="form-control w-50 m-2" id="sqmt" type="number">
+            <input placeholder="cent" onkeyup="sqmtCalculation('cent')" class="form-control w-50 m-2" id="cent" type="number">
+            <button onclick="sqmtreset()" class="m-2 btn btn-primary"> Reset</button>
+        </div>
+
+        <div class="col-3">
+            <h5> Sq.ft To Cent</h5>
+            <input placeholder="sq.ft" onkeyup="sqftCalculation('sqft')" class="form-control w-50 m-2" id="sqft" type="number">
+            <input placeholder="cent" onkeyup="sqftCalculation('cent')" class="form-control w-50 m-2" id="sqftCent" type="number">
+            <button onclick="sqftReset()" class="m-2 btn btn-primary"> Reset</button>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
